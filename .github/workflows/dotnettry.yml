@@ -14,6 +14,6 @@ jobs:
       with:
         dotnet-version: 2.2.108
     - name: Intall dotnet try
-      run: dotnet tool update -g dotnet-try 
+      run: dotnet tool install -g dotnet-try 
     - name: Verify docs
       run: dotnet try verify
