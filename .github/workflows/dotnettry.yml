@@ -1,22 +1,21 @@
 name: .NET Core
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.0.100
-    
-    - name: mkdir tmp
-      run: mkdir tmp
-    - name: Intall dotnet try
-      run: dotnet tool install dotnet-try --tool-path ./tmp
-    - name: Verify docs
-      run: ./tmp/dotnet-try verify
+      - uses: actions/checkout@v1
+      - name: Install .NET Core 3.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.0.100
+      - name: Intall dotnet try
+        run: dotnet tool install dotnet-try --tool-path dotnet-try-tool
+
+      - name: Verify docs
+        run: dotnet-try-tool/dotnet-try verify
+        env:
+          DOTNET_TRY_CLI_TELEMETRY_OPTOUT: 1
